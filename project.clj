@@ -1,4 +1,4 @@
-(defproject com.bevuta/lpd "0.1.0"
+(defproject com.bevuta/lpd "0.1.0-SNAPSHOT"
   :description "Library implementing the server-side of RFC 1179 (Line Printer Daemon)"
   :url "https://github.com/bevuta/lpd"
   :license {:name "Eclipse Public License"
