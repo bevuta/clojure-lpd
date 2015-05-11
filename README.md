@@ -46,7 +46,7 @@ all incoming print jobs and log them to standard out:
 
 ## License
 
-Copyright © 2014 bevuta IT GmbH
+Copyright © 2015 bevuta IT GmbH
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
