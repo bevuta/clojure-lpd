@@ -1,4 +1,4 @@
-# lpd
+# clojure-lpd
 
 A pure Clojure implementation of the server-side of the Line Printer
 Daemon protocol.
