@@ -153,8 +153,8 @@
                                    (handle-subcommand job in out))]
                 (recur job)
                 job))]
-    (when (satisfies? IPrintJobHandler handler)
-      (accept-job handler queue job))))
+    (assert (satisfies? IPrintJobHandler handler))
+    (accept-job handler queue job)))
 
 (defn ^:private handle-resume-queue [handler queue in out]
   (when (satisfies? IResumeQueueHandler handler)

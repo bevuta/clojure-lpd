@@ -6,7 +6,13 @@
            java.util.concurrent.TimeUnit))
 
 (defn make-server [{:keys [host port handler pool-size]}]
-  {:pre [(protocol/handler? handler)]}
+  {:pre [(string? host) (< 0 port 65535)]}
+  ;; Check `handler' is a valid `IPrintJobHandler'
+  (when-not (protocol/handler? (if (var? handler)
+                                 (var-get handler)
+                                 handler))
+    (throw (ex-info "Given handler doesn't implement IPrintJobHandler."
+                    {:handler handler})))
   {:host host
    :port port
    :pool-size pool-size
@@ -21,8 +27,12 @@
   (try
     (let [in (.getInputStream client)
           out (.getOutputStream client)
-          command (-> in protocol/read-command)]
-      (protocol/handle-command command (:handler server) in out))
+          command (-> in protocol/read-command)
+          handler (let [h (:handler server)]
+                    (if (var? h)
+                      (var-get h)
+                      h))]
+      (protocol/handle-command command handler in out))
     (finally
       (println "Closing connection to" client)
       (.close client))))
