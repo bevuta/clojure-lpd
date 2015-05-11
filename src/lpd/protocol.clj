@@ -10,7 +10,7 @@
 (defprotocol IPrintJobHandler
   (accept-job [_ queue job]
     "Called after a complete job was received. This is the main entry
-    point for "))
+    point."))
 
 (defprotocol IListPrintQueueHandler
   (list-queue [_ queue]
@@ -46,7 +46,7 @@
         (cond
           (= [10] r)
           (conj acc arg)
-          
+
           (seq r)
           (recur (conj acc arg) (rest r))
 
@@ -121,7 +121,7 @@
     (case op
       0x01
       (assoc job :canceled? true)
-      
+
       (0x02 0x03)
       (let [[_ size name] command
             size (parse-size size)
@@ -184,7 +184,7 @@
 (defn handle-command [command handler in out]
   {:pre [(handler? handler)]}
   (let [[op queue & _] command
-        queue (parse-string queue)]
+        queue (when queue (parse-string queue))]
     (case op
       0x01        (handle-resume-queue handler queue in out)
       0x02        (handle-add-job handler queue in out)
@@ -193,4 +193,3 @@
         (println "got unimplemented command:" (pr-str command))
         (.write out 0x01)
         (.close out)))))
-
