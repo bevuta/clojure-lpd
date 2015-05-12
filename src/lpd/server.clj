@@ -67,3 +67,16 @@
   (.close (:socket server))
   (shutdown-pool server)
   (dissoc server :socket :pool))
+
+(comment
+  (def my-handler (reify
+                    protocol/IPrintJobHandler
+                    (accept-job [_ queue job]
+                      (println "got job on queue" queue)
+                      (prn job))))
+  (def my-server (make-server {:host "localhost"
+                               :port 6332
+                               :handler #'my-handler}))
+  
+  (alter-var-root #'my-server start-server)
+  (alter-var-root #'my-server stop-server))
